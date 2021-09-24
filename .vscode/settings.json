@@ -1,0 +1,8 @@
+{
+  "vetur.validation.templateProps": false,
+  "editor.snippetSuggestions": "bottom",
+  "editor.quickSuggestions": true,
+  "editor.suggest.shareSuggestSelections": true,
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true
+}
