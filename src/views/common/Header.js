@@ -13,7 +13,13 @@ const Header = (props) => {
   }
 
   const text = <h4>MENU</h4>
-  const content = <div>123</div>
+  const content = (
+    <div style={{ width: '100%', textAlign: 'center' }}>
+      <Link to="/employee/list" style={{ color: '#b31834' }}>
+        Employee List
+      </Link>
+    </div>
+  )
 
   return (
     <>

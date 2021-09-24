@@ -25,7 +25,7 @@ function App() {
             <Route path={url.employeeListPage} component={EmployeeList} />
             <Route path={url.employeeAddPage} component={EmployeeDetail} />
             <Route path={url.employeeEditPage} component={EmployeeDetail} />
-            {/* <Route component={NotFound} /> */}
+            <Route component={NotFound} />
           </Switch>
         </Content>
 
