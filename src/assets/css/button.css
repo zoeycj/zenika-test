@@ -1,0 +1,25 @@
+.primary-btn {
+  background-color: #08428c;
+  color: #fff;
+  padding: 10px 24px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: none;
+  /* width: 100%; */
+  display: block;
+  margin: 10px auto;
+}
+.primary-btn:hover {
+  cursor: pointer;
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.ant-btn-background-ghost {
+  border-radius: 5px;
+}
+.white-btn {
+  border-radius: 5px;
+  font-size: 12px;
+  width: 90%;
+  margin: 2px auto;
+}
