@@ -73,50 +73,6 @@ p {
   background-color: #fff;
 }
 
-/* popup Menu */
-/* .ant-popover-inner-content {
-  padding-right: 5px;
-  width: 220px;
+.anticon svg {
+  height: 100%;
 }
-
-.menu-container {
-  padding-left: 0px !important ;
-}
-.menu-container li {
-  list-style-type: none;
-}
-
-.menu-container li a {
-  margin-bottom: 0;
-  display: inline-block;
-  width: 70%;
-  font-size: 16px;
-  font-weight: 600;
-  color: #000;
-  padding: 8px;
-}
-.menu-container li a:hover {
-  text-decoration: underline;
-  color: #1dbf73;
-}
-.menu-container li a:nth-child(1) {
-  width: 100%;
-  font-size: 1.2rem;
-  text-align: center;
-  color: #1dbf73;
-  padding: 0;
-}
-.menu-container .ant-divider {
-  margin-top: 10px;
-  margin-bottom: 10px;
-} */
-
-/* .ant-modal.log-container {
-  width: 390px !important;
-}
-.ant-modal.log-container .ant-modal-title {
-  text-align: center;
-  font-size: 18px;
-  font-weight: bolder;
-  color: #404145;
-} */

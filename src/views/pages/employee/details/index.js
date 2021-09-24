@@ -7,16 +7,7 @@ const { Item } = Form
 const EmployeeDetail = (props) => {
   const [employeeId, setEmployeeId] = useState(null)
   const [centerTitle, setCenterTitle] = useState('')
-  const formItemLayout = {
-    labelCol: {
-      xs: { span: 24 },
-      lg: { span: 4 },
-    },
-    wrapperCol: {
-      xs: { span: 24 },
-      lg: { span: 10 },
-    },
-  }
+
   const [form] = Form.useForm()
   useEffect(() => {
     const style = props.location.state.style
@@ -35,7 +26,7 @@ const EmployeeDetail = (props) => {
     props.history.goBack()
   }
   const onFinish = (values) => {
-    console.log('Received values of form: ', values)
+    // console.log('Received values of form: ', values)
   }
   const prefixSelector = (
     <Item name="prefix" noStyle>
@@ -48,18 +39,7 @@ const EmployeeDetail = (props) => {
       </Select>
     </Item>
   )
-  const tailFormItemLayout = {
-    wrapperCol: {
-      xs: {
-        span: 24,
-        offset: 0,
-      },
-      sm: {
-        span: 8,
-        offset: 16,
-      },
-    },
-  }
+
   const title = (
     <>
       <Row>
@@ -71,9 +51,8 @@ const EmployeeDetail = (props) => {
   return (
     <>
       <h2>{centerTitle}</h2>
-      <Card title={title} {...formItemLayout} form={form}>
+      <Card title={title} form={form}>
         <Form
-          {...formItemLayout}
           form={form}
           name="register"
           onFinish={onFinish}
@@ -114,7 +93,6 @@ const EmployeeDetail = (props) => {
           <Item
             name="lastName"
             label="Last name"
-            initialValue={employeeId}
             tooltip="What do you want others to call you?"
             rules={[
               {
@@ -176,7 +154,7 @@ const EmployeeDetail = (props) => {
               <Option value="female">Female</Option>
             </Select>
           </Item>
-          <Item {...tailFormItemLayout}>
+          <Item>
             <Row>
               <Col
                 span={24}
