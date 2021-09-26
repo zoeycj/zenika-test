@@ -49,7 +49,7 @@ const EmployeeDetail = (props) => {
       setIsChange(false)
       setTimeout(() => {
         props.history.push('/employee/list')
-      }, 2000)
+      }, 1000)
     }
   }, [addStatus, editStatus])
 
