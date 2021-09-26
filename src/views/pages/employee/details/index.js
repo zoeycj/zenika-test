@@ -1,20 +1,31 @@
-/* eslint-disable no-debugger */
 import React, { useEffect, useState } from 'react'
-import { Card, Row, Form, Input, Select, Col, Button } from 'antd'
+import { Prompt } from 'react-router-dom'
+import { Card, Row, Form, Input, Select, Col, Button, Radio } from 'antd'
+import { useDispatch, useSelector } from 'react-redux'
 import { BackwardOutlined } from '@ant-design/icons'
+import {
+  addEmployee,
+  editEmployee,
+} from '../../../../state/ducks/employee/actions'
 const { Option } = Select
 const { Item } = Form
 const EmployeeDetail = (props) => {
-  const [employeeId, setEmployeeId] = useState(null)
+  const dispatch = useDispatch()
+  const [isChange, setIsChange] = useState(false)
   const [centerTitle, setCenterTitle] = useState('')
-
+  const [employee, setEmployee] = useState({})
+  const [edit, setEdit] = useState(props.location.state.edit)
   const [form] = Form.useForm()
+  let addStatus = useSelector(
+    (state) => state.employeeOperations.newEmployee.success
+  )
+  let editStatus = useSelector(
+    (state) => state.employeeOperations.employeeDetails.success
+  )
   useEffect(() => {
-    const style = props.location.state.style
-    const edit = props.location.state.edit
+    addStatus = false
+    editStatus = false
     if (edit) {
-      const id = props.location.state.employee._id
-      setEmployeeId(id)
       setCenterTitle(
         `Update Employee 【 ${props.location.state.employee.firstName} ${props.location.state.employee.lastName} 】`
       )
@@ -22,12 +33,38 @@ const EmployeeDetail = (props) => {
       setCenterTitle('Create new Employee')
     }
   }, [props])
+  useEffect(() => {
+    if (employee.firstName) {
+      if (edit) {
+        employee._id = props.location.state.employee._id
+        dispatch(editEmployee(employee))
+      } else {
+        dispatch(addEmployee(employee))
+      }
+    }
+  }, [employee, dispatch])
+
+  useEffect(() => {
+    if (addStatus || editStatus) {
+      setIsChange(false)
+      setTimeout(() => {
+        props.history.push('/employee/list')
+      }, 2000)
+    }
+  }, [addStatus, editStatus])
+
   const onBack = () => {
     props.history.goBack()
   }
   const onFinish = (values) => {
-    // console.log('Received values of form: ', values)
+    delete values.prefix
+    const newEmployee = values
+    setEmployee(newEmployee)
   }
+  const onChange = () => {
+    setIsChange(true)
+  }
+
   const prefixSelector = (
     <Item name="prefix" noStyle>
       <Select
@@ -39,7 +76,6 @@ const EmployeeDetail = (props) => {
       </Select>
     </Item>
   )
-
   const title = (
     <>
       <Row>
@@ -47,15 +83,21 @@ const EmployeeDetail = (props) => {
       </Row>
     </>
   )
-
   return (
     <>
+      <Prompt
+        when={isChange}
+        message={() =>
+          'Form has been modified. You will lose your unsaved changes. Are you sure you want to close this form?'
+        }
+      />
       <h2>{centerTitle}</h2>
       <Card title={title} form={form}>
         <Form
           form={form}
           name="register"
           onFinish={onFinish}
+          onChange={onChange}
           initialValues={{
             firstName: props.location.state.edit
               ? props.location.state.employee.firstName
@@ -83,8 +125,16 @@ const EmployeeDetail = (props) => {
             rules={[
               {
                 required: true,
-                message: 'Please input your First name!',
                 whitespace: true,
+                message: 'Please input your First name!',
+              },
+              {
+                min: 6,
+                message: 'First name must be no less than 6 characters!',
+              },
+              {
+                max: 10,
+                message: 'First name must be no more than 10 characters!',
               },
             ]}
           >
@@ -97,8 +147,16 @@ const EmployeeDetail = (props) => {
             rules={[
               {
                 required: true,
-                message: 'Please input your Last name!',
                 whitespace: true,
+                message: 'Please input your Last name!',
+              },
+              {
+                min: 6,
+                message: 'Last name must be no less than 6 characters!',
+              },
+              {
+                max: 10,
+                message: 'Last name must be no more than 10 characters!',
               },
             ]}
           >
@@ -127,7 +185,9 @@ const EmployeeDetail = (props) => {
             rules={[
               {
                 required: true,
-                message: 'Please input your phone number!',
+                pattern: /^\d{8}$|^\d{5}$/,
+                message:
+                  'Please input valid phone number,must be 8 digits in length !',
               },
             ]}
           >
@@ -138,7 +198,6 @@ const EmployeeDetail = (props) => {
               }}
             />
           </Item>
-
           <Item
             name="gender"
             label="Gender"
@@ -149,10 +208,10 @@ const EmployeeDetail = (props) => {
               },
             ]}
           >
-            <Select placeholder="select your gender">
-              <Option value="male">Male</Option>
-              <Option value="female">Female</Option>
-            </Select>
+            <Radio.Group>
+              <Radio value="male">Male</Radio>
+              <Radio value="female">Female</Radio>
+            </Radio.Group>
           </Item>
           <Item>
             <Row>

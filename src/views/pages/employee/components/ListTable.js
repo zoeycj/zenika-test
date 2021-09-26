@@ -1,5 +1,4 @@
-/* eslint-disable no-debugger */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Row, Table, message, Col, Modal } from 'antd'
 import {
@@ -13,13 +12,13 @@ import { deleteEmployee } from '../../../../state/ducks/employee/actions'
 
 const ListTable = (props) => {
   const dispatch = useDispatch()
+  const deleteStatus = useSelector(
+    (state) => state.employeeOperations.deleteEmployee.success
+  )
   const [visible, setVisible] = useState(false)
-  const [employeeId, setEmployeeId] = useState(null)
   const [employee, setEmployee] = useState({})
-
   const onEdit = (employee) => {
     const id = employee._id
-    // setEmployeeId(id)
     props.history.push(`${employeeEditPage}/${id}`, {
       edit: true,
       employee,
@@ -33,23 +32,13 @@ const ListTable = (props) => {
     setVisible(false)
   }
   const handleOk = () => {
-    console.log('delete employee here2', employee)
-    // const employeeId = employee._id
-    const employeeId = employee.email
-    debugger
+    const employeeId = employee._id
     dispatch(deleteEmployee(employeeId))
     setVisible(false)
   }
-  const isDelete = useSelector(
-    (state) =>
-      state.employeeOperations.deleteEmployee
-        ? state.employeeOperations.deleteEmployee.error
-          ? true
-          : false
-        : false
-    // (state) => state.employeeOperations.deleteEmployee.data
-  )
-  console.log('statusCode', isDelete)
+  useEffect(() => {
+    props.getDeleteStatus(deleteStatus)
+  }, [deleteStatus, props])
   const columns = [
     {
       title: 'First name',
@@ -83,13 +72,14 @@ const ListTable = (props) => {
       filters: [
         {
           text: 'Male',
-          value: 'Male',
+          value: 'male',
         },
         {
           text: 'Female',
-          value: 'Female',
+          value: 'female',
         },
       ],
+
       onFilter: (value, record) => record.gender.indexOf(value) === 0,
     },
     {

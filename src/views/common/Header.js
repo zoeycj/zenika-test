@@ -1,20 +1,19 @@
-/* eslint-disable no-debugger */
-import React, { useEffect, useState } from 'react'
-import { Popover, Button, Modal } from 'antd'
+import React, { useState } from 'react'
+import { Popover, Button } from 'antd'
 import { MenuOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
-const title = 'H S'
-
 const Header = (props) => {
   const [visible, setVisible] = useState(false)
-
   const handleVisibleChange = (visible) => {
     setVisible(visible)
   }
-
   const text = <h4>MENU</h4>
   const content = (
     <div style={{ width: '100%', textAlign: 'center' }}>
+      <Link to="/home" style={{ color: '#b31834' }}>
+        Home
+      </Link>
+      <br />
       <Link to="/employee/list" style={{ color: '#b31834' }}>
         Employee List
       </Link>

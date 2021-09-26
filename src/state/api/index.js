@@ -1,4 +1,3 @@
-/* eslint-disable no-debugger */
 import axios from 'axios'
 
 export default (history = null) => {
@@ -16,11 +15,9 @@ export default (history = null) => {
   axiosInstance.interceptors.response.use(
     async (response) =>
       new Promise((resolve, reject) => {
-        debugger
         resolve(response)
       }),
     async (error) => {
-      debugger
       if (!error.response) {
         return new Promise((resolve, reject) => {
           reject(error)
